@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+<body>
+<h1>Left Click to Draw, Right Click to Clear All</h1>
+<canvas id="draw" width="800" height="800"></canvas>
+
+<script>
+    const canvas = document.querySelector('#draw');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    ctx.strokeStyle = 'BADA55';
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.lineWidth = 50;
+
+    let isDrawing = false;;
+    let lastX = 0;
+    let lastY = 0;
+    let hue = 0;
+    let direction = true;
+
+    function draw(e) {
+        if(!isDrawing) return;
+        // console.log(e);
+        ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+
+        ctx.beginPath();
+        ctx.moveTo(lastX,lastY);
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+
+        hue++;
+        if (hue >= 360) {
+            hue = 0;
+        }//if
+
+        if(ctx.lineWidth >= 100 || ctx.lineWidth <= 10) {
+            direction = !direction;
+        }//if
+
+        if(direction){
+            ctx.lineWidth += .25;
+        }//if
+        else {
+            ctx.lineWidth -= .25;
+        }//else
+        
+
+
+  }//draw
+
+  function clearContext(){
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+  }
+
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mousedown', (e) => {
+
+        //Left Click (0) to Draw, Right Click (2) to Erase All
+        if(e.button === 0) {
+            isDrawing = true;
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        }//if
+        else if(e.button === 2) {
+            clearContext();
+        }//else if
+        
+    });
+    canvas.addEventListener('mouseup', () => isDrawing = false);
+    canvas.addEventListener('mouseout', () => isDrawing = false);
+
+    //Disables the right click popup menu
+    canvas.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        return false;
+    });
+
+
+</script>
+
+
+<style>
+  html, body {
+    margin: 0;
+  }
+
+  h1 {
+    display: inline-block;
+    font-size: 150%;
+    border: 2px solid black;
+    width: auto;
+    margin-bottom: 0;
+  }
+
+  canvas {
+    cursor: grab;
+  }
+</style>
+
+</body>
+</html>
