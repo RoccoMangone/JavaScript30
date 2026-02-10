@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Key Detection</title>
+    <!-- <script type="text/javascript" src="./cornify.js"></script> -->
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
+    <script>
+        const pressed = [];
+        const secretCode = 'rocco'
+        const msg = "You did it!";
+
+
+        window.addEventListener('keyup', (e) => {
+            console.log(e);
+            pressed.push(e.key);
+            pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
+            console.log(pressed);
+
+            if(pressed.join('').includes(secretCode)){
+                console.log(msg);
+            }
+
+        })
+    </script>
+  </body>
+</html>
