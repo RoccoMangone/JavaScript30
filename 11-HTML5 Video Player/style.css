@@ -76,6 +76,7 @@ body {
 
 .player:hover .player__controls {
   transform: translateY(0);
+  background: rgba(0, 0, 0, 0.65);
 }
 
 .player:hover .progress {
@@ -99,9 +100,9 @@ body {
 
 .progress__filled {
   width: 50%;
-  background: #ffc600;
+  background: #ff0000;
   flex: 0;
-  flex-basis: 50%;
+  flex-basis: 0%;
 }
 
 /* unholy css to style input type="range" */
